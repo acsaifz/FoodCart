@@ -49,6 +49,7 @@ public class FoodCart {
             }
         }else {
             cart.add(food);
+            Food.updateIdCount();
         }
     }
 
