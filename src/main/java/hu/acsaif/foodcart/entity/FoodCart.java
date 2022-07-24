@@ -10,13 +10,9 @@ public class FoodCart {
 
     public FoodCart() {
         addOrUpdate(new Food("Cabbage",FoodType.VEGETABLE,500));
-        Food.updateIdCount();
         addOrUpdate(new Food("Grapes",FoodType.FRUIT,740));
-        Food.updateIdCount();
         addOrUpdate(new Food("Pepper", FoodType.SPICE,225));
-        Food.updateIdCount();
         addOrUpdate(new Food("Beer", FoodType.DRINK,150));
-        Food.updateIdCount();
     }
 
     public List<Food> getCart() {
