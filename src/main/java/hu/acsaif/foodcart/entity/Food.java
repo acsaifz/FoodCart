@@ -11,11 +11,11 @@ public class Food {
     private int foodPrice;
 
     public Food(){
-        id = count++;
+        id = count;
     }
 
     public Food(String foodName, FoodType foodType, int foodPrice) {
-        id = count++;
+        id = count;
         this.foodName = foodName;
         this.foodType = foodType;
         this.foodPrice = foodPrice;
@@ -53,8 +53,8 @@ public class Food {
         this.foodPrice = foodPrice;
     }
 
-    public static void correctIdCount(){
-        count--;
+    public static void updateIdCount(){
+        count++;
     }
     @Override
     public String toString() {

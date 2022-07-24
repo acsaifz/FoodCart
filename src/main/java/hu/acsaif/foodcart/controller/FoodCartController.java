@@ -53,7 +53,7 @@ public class FoodCartController {
     @PostMapping("/add")
     public String addFood(@ModelAttribute(name = "food") Food food, Model model){
         foodCart.addOrUpdate(food);
-        Food.correctIdCount();
+        Food.updateIdCount();
         return "redirect:/foodCart";
     }
 
