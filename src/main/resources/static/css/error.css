@@ -1,12 +1,21 @@
 /**/
 :root {
     --main-color: white;
-    --stroke-color: black;
+    --stroke-color: #212529;
 
 }
 /**/
 body {
     background: var(--main-color);
+}
+a {
+    -webkit-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+    color: #29abe2;
+    text-decoration: none;
+    background: 0 0;
+    cursor: pointer;
 }
 h1 {
     margin: 100px auto 0 auto;
