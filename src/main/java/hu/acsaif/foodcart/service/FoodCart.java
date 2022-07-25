@@ -1,5 +1,7 @@
-package hu.acsaif.foodcart.entity;
+package hu.acsaif.foodcart.service;
 
+import hu.acsaif.foodcart.entity.Food;
+import hu.acsaif.foodcart.entity.FoodType;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ public class FoodCart {
     private List<Food> cart;
 
     public FoodCart() {
-        addOrUpdate(new Food("Cabbage",FoodType.VEGETABLE,500));
+        addOrUpdate(new Food("Cabbage", FoodType.VEGETABLE,500));
         addOrUpdate(new Food("Grapes",FoodType.FRUIT,740));
         addOrUpdate(new Food("Pepper", FoodType.SPICE,225));
         addOrUpdate(new Food("Beer", FoodType.DRINK,150));

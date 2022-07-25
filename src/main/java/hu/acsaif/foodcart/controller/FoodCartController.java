@@ -1,7 +1,7 @@
 package hu.acsaif.foodcart.controller;
 
 import hu.acsaif.foodcart.entity.Food;
-import hu.acsaif.foodcart.entity.FoodCart;
+import hu.acsaif.foodcart.service.FoodCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
