@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,13 +21,24 @@ public class FoodCartController {
     }
 
     @GetMapping("")
-    public String getHomePage(@RequestParam(required = false, defaultValue = "", name = "filter") String filter, Model model){
-        List<Food> foods;
+    public String getHomePage(@RequestParam(required = false, defaultValue = "", name = "filter") String filter,
+                              @RequestParam(required = false, defaultValue = "", name = "sortBy") String sortBy,
+                              Model model){
+        List<Food> foods = new ArrayList<>(foodCart.getCart());
+
+        switch (sortBy) {
+            case "idAsc" -> foods.sort((Food f1, Food f2) -> f1.getId() - f2.getId());
+            case "idDesc" -> foods.sort((Food f1, Food f2) -> f2.getId() - f1.getId());
+            case "nameAsc" -> foods.sort((Food f1, Food f2) -> f1.getFoodName().compareTo(f2.getFoodName()));
+            case "nameDesc" -> foods.sort((Food f1, Food f2) -> f2.getFoodName().compareTo(f1.getFoodName()));
+            case "typeAsc" -> foods.sort((Food f1, Food f2) -> f1.getFoodType().compareTo(f2.getFoodType()));
+            case "typeDesc" -> foods.sort((Food f1, Food f2) -> f2.getFoodType().compareTo(f1.getFoodType()));
+            case "priceAsc" -> foods.sort((Food f1, Food f2) -> f1.getFoodPrice() - f2.getFoodPrice());
+            case "priceDesc" -> foods.sort((Food f1, Food f2) -> f2.getFoodPrice() - f1.getFoodPrice());
+        }
 
         if (!filter.isBlank()) {
-             foods = foodCart.getCart().stream().filter(food -> food.getFoodName().toLowerCase().contains(filter.toLowerCase())).toList();
-        }else{
-            foods = foodCart.getCart();
+             foods = foods.stream().filter(food -> food.getFoodName().toLowerCase().contains(filter.toLowerCase())).toList();
         }
 
         model.addAttribute("foodCart", foods);
