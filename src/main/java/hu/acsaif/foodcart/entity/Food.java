@@ -4,18 +4,15 @@ import java.util.Objects;
 
 
 public class Food {
-    private static int count = 1;
     private int id;
     private String foodName;
     private FoodType foodType;
     private int foodPrice;
 
     public Food(){
-        id = count;
     }
 
     public Food(String foodName, FoodType foodType, int foodPrice) {
-        id = count;
         this.foodName = foodName;
         this.foodType = foodType;
         this.foodPrice = foodPrice;
@@ -53,9 +50,6 @@ public class Food {
         this.foodPrice = foodPrice;
     }
 
-    public static void updateIdCount(){
-        count++;
-    }
     @Override
     public String toString() {
         return "Food{" +

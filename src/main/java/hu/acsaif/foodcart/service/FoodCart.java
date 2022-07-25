@@ -2,12 +2,13 @@ package hu.acsaif.foodcart.service;
 
 import hu.acsaif.foodcart.entity.Food;
 import hu.acsaif.foodcart.entity.FoodType;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-@Component
+@Service
 public class FoodCart {
+    private int idCounter=0;
     private List<Food> cart;
 
     public FoodCart() {
@@ -34,9 +35,6 @@ public class FoodCart {
             cart = new ArrayList<>();
         }
 
-        for (Food foodInCart: cart) {
-
-        }
         if (cart.contains(food)){
             for (Food foodInCart: cart){
                 if (foodInCart.equals(food)){
@@ -46,8 +44,8 @@ public class FoodCart {
                 }
             }
         }else {
+            food.setId(++idCounter);
             cart.add(food);
-            Food.updateIdCount();
         }
     }
 
