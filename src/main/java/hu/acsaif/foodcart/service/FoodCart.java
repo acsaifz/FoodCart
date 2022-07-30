@@ -61,4 +61,27 @@ public class FoodCart {
         }
         return null;
     }
+
+    public List<Food> sortBy(String sortBy){
+        List<Food> foods = new ArrayList<>(cart);
+
+        switch (sortBy) {
+            case "idAsc" -> foods.sort((Food f1, Food f2) -> f1.getId() - f2.getId());
+            case "idDesc" -> foods.sort((Food f1, Food f2) -> f2.getId() - f1.getId());
+            case "nameAsc" -> foods.sort((Food f1, Food f2) -> f1.getFoodName().compareTo(f2.getFoodName()));
+            case "nameDesc" -> foods.sort((Food f1, Food f2) -> f2.getFoodName().compareTo(f1.getFoodName()));
+            case "typeAsc" -> foods.sort((Food f1, Food f2) -> f1.getFoodType().compareTo(f2.getFoodType()));
+            case "typeDesc" -> foods.sort((Food f1, Food f2) -> f2.getFoodType().compareTo(f1.getFoodType()));
+            case "priceAsc" -> foods.sort((Food f1, Food f2) -> f1.getFoodPrice() - f2.getFoodPrice());
+            case "priceDesc" -> foods.sort((Food f1, Food f2) -> f2.getFoodPrice() - f1.getFoodPrice());
+        }
+
+        return foods;
+    }
+
+    public void filterBy(List<Food> foods, String name, FoodType foodType,int priceFrom, int priceTo){
+        if (!name.isBlank()) {
+            foods = foods.stream().filter(food -> food.getFoodName().toLowerCase().contains(name.toLowerCase())).toList();
+        }
+    }
 }
