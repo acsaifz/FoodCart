@@ -1,6 +1,8 @@
 package hu.acsaif.foodcart.controller;
 
 import hu.acsaif.foodcart.entity.Food;
+import hu.acsaif.foodcart.entity.FoodSort;
+import hu.acsaif.foodcart.entity.FoodType;
 import hu.acsaif.foodcart.service.FoodCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +22,14 @@ public class FoodCartController {
     }
 
     @GetMapping("")
-    public String getHomePage(@RequestParam(required = false, defaultValue = "", name = "filter") String filter,
-                              @RequestParam(required = false, defaultValue = "", name = "sortBy") String sortBy,
+    public String getHomePage(@RequestParam(required = false, defaultValue = "", name = "nameFilter") String nameFilter,
+                              @RequestParam(required = false, defaultValue = "", name = "typeFilter") List<FoodType> typeFilters,
+                              @RequestParam(required = false, defaultValue = "", name = "priceFrom") Integer priceFrom,
+                              @RequestParam(required = false, defaultValue = "", name = "priceTo") Integer priceTo,
+                              @RequestParam(required = false, defaultValue = "", name = "sortBy") FoodSort sortBy,
                               Model model){
         List<Food> foods = foodCart.sortBy(sortBy);
-
-        //foodCart.filterBy(foods);
+        foods = foodCart.filterBy(foods,nameFilter,typeFilters,priceFrom,priceTo);
 
         model.addAttribute("foodCart", foods);
         model.addAttribute("sumOfFoods", foodCart.getSize());

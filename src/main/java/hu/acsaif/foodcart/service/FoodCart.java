@@ -1,11 +1,13 @@
 package hu.acsaif.foodcart.service;
 
 import hu.acsaif.foodcart.entity.Food;
+import hu.acsaif.foodcart.entity.FoodSort;
 import hu.acsaif.foodcart.entity.FoodType;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class FoodCart {
     private int idCounter=0;
@@ -62,26 +64,51 @@ public class FoodCart {
         return null;
     }
 
-    public List<Food> sortBy(String sortBy){
+    public List<Food> sortBy(FoodSort sortBy){
         List<Food> foods = new ArrayList<>(cart);
 
+        if(sortBy == null){
+            return foods;
+        }
+
         switch (sortBy) {
-            case "idAsc" -> foods.sort((Food f1, Food f2) -> f1.getId() - f2.getId());
-            case "idDesc" -> foods.sort((Food f1, Food f2) -> f2.getId() - f1.getId());
-            case "nameAsc" -> foods.sort((Food f1, Food f2) -> f1.getFoodName().compareTo(f2.getFoodName()));
-            case "nameDesc" -> foods.sort((Food f1, Food f2) -> f2.getFoodName().compareTo(f1.getFoodName()));
-            case "typeAsc" -> foods.sort((Food f1, Food f2) -> f1.getFoodType().compareTo(f2.getFoodType()));
-            case "typeDesc" -> foods.sort((Food f1, Food f2) -> f2.getFoodType().compareTo(f1.getFoodType()));
-            case "priceAsc" -> foods.sort((Food f1, Food f2) -> f1.getFoodPrice() - f2.getFoodPrice());
-            case "priceDesc" -> foods.sort((Food f1, Food f2) -> f2.getFoodPrice() - f1.getFoodPrice());
+            case ID_ASC -> foods.sort((Food f1, Food f2) -> f1.getId() - f2.getId());
+            case ID_DESC -> foods.sort((Food f1, Food f2) -> f2.getId() - f1.getId());
+            case NAME_ASC -> foods.sort((Food f1, Food f2) -> f1.getFoodName().compareTo(f2.getFoodName()));
+            case NAME_DESC -> foods.sort((Food f1, Food f2) -> f2.getFoodName().compareTo(f1.getFoodName()));
+            case TYPE_ASC -> foods.sort((Food f1, Food f2) -> f1.getFoodType().compareTo(f2.getFoodType()));
+            case TYPE_DESC -> foods.sort((Food f1, Food f2) -> f2.getFoodType().compareTo(f1.getFoodType()));
+            case PRICE_ASC -> foods.sort((Food f1, Food f2) -> f1.getFoodPrice() - f2.getFoodPrice());
+            case PRICE_DESC -> foods.sort((Food f1, Food f2) -> f2.getFoodPrice() - f1.getFoodPrice());
         }
 
         return foods;
     }
 
-    public void filterBy(List<Food> foods, String name, FoodType foodType,int priceFrom, int priceTo){
-        if (!name.isBlank()) {
-            foods = foods.stream().filter(food -> food.getFoodName().toLowerCase().contains(name.toLowerCase())).toList();
+    public List<Food> filterBy(List<Food> foods, String nameFilter, List<FoodType> typeFilters,Integer priceFrom, Integer priceTo){
+        if (!nameFilter.isBlank()) {
+            foods = foods.stream().filter(food -> food.getFoodName().toLowerCase().contains(nameFilter.toLowerCase())).toList();
         }
+
+        if (typeFilters.size() > 0){
+            foods = foods.stream().filter(food -> {
+                for (FoodType foodType: typeFilters){
+                    if (foodType == food.getFoodType()){
+                        return true;
+                    }
+                }
+                return false;
+            }).toList();
+        }
+
+        if (priceFrom != null){
+            foods = foods.stream().filter(food -> food.getFoodPrice() >= priceFrom).toList();
+        }
+
+        if (priceTo != null){
+            foods = foods.stream().filter(food -> food.getFoodPrice() <= priceTo).toList();
+        }
+
+        return foods;
     }
 }

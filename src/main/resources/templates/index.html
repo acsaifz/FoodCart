@@ -40,11 +40,30 @@
             <div class="container px-4 px-lg-5 mt-4">
                 <form th:action="@{/foodCart}" method="get">
                     <div class="row">
-                        <div class="col-11">
-                            <input type="text" class="form-control" id="filter" name="filter" th:value="${param.filter}"/>
+                        <div class="col-3">
+                            <input type="text" class="form-control" id="nameFilter" name="nameFilter" th:value="${param.nameFilter}" placeholder="Filter by name"/>
                         </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-dark">Search</button>
+                        <div class="col-2">
+                            <select multiple class="form-control" id="typeFilter" name="typeFilter">
+                                <option th:each="foodType: ${T(hu.acsaif.foodcart.entity.FoodType).values()}"
+                                        th:value="${foodType}" th:text="${foodType.getDisplayValue()}"></option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <input type="text" class="form-control" id="priceFrom" name="priceFrom" th:value="${param.priceFrom}" placeholder="Price from"/>
+                        </div>
+                        <div class="col-2">
+                            <input type="text" class="form-control" id="priceTo" name="priceTo" th:value="${param.priceTo}" placeholder="Price to"/>
+                        </div>
+                        <div class="col-2">
+                            Sort by
+                            <select class="form-control" id="sortBy" name="sortBy">
+                                <option th:each="sortBy: ${T(hu.acsaif.foodcart.entity.FoodSort).values()}"
+                                        th:value="${sortBy}" th:text="${sortBy.getDisplayValue()}"></option>
+                            </select>
+                        </div>
+                        <div class="col-1">
+                            <button type="submit" class="btn btn-dark">Filter</button>
                         </div>
                     </div>
                 </form>
@@ -53,30 +72,10 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">#
-                                <a th:if="${param.filter}" th:href="@{/foodCart(filter=${param.filter},sortBy=${'idDesc'})}"><i class="bi bi-arrow-down"></i></a>
-                                <a th:unless="${param.filter}" th:href="@{/foodCart(sortBy=${'idDesc'})}"><i class="bi bi-arrow-down"></i></a>
-                                <a th:if="${param.filter}" th:href="@{/foodCart(filter=${param.filter},sortBy=${'idAsc'})}"><i class="bi bi-arrow-up"></i></a>
-                                <a th:unless="${param.filter}" th:href="@{/foodCart(sortBy=${'idAsc'})}"><i class="bi bi-arrow-up"></i></a>
-                            </th>
-                            <th scope="col">Name
-                                <a th:if="${param.filter}" th:href="@{/foodCart(filter=${param.filter},sortBy=${'nameDesc'})}"><i class="bi bi-arrow-down"></i></a>
-                                <a th:unless="${param.filter}" th:href="@{/foodCart(sortBy=${'nameDesc'})}"><i class="bi bi-arrow-down"></i></a>
-                                <a th:if="${param.filter}" th:href="@{/foodCart(filter=${param.filter},sortBy=${'nameAsc'})}"><i class="bi bi-arrow-up"></i></a>
-                                <a th:unless="${param.filter}" th:href="@{/foodCart(sortBy=${'nameAsc'})}"><i class="bi bi-arrow-up"></i></a>
-                            </th>
-                            <th scope="col">Type
-                                <a th:if="${param.filter}" th:href="@{/foodCart(filter=${param.filter},sortBy=${'typeDesc'})}"><i class="bi bi-arrow-down"></i></a>
-                                <a th:unless="${param.filter}" th:href="@{/foodCart(sortBy=${'typeDesc'})}"><i class="bi bi-arrow-down"></i></a>
-                                <a th:if="${param.filter}" th:href="@{/foodCart(filter=${param.filter},sortBy=${'typeAsc'})}"><i class="bi bi-arrow-up"></i></a>
-                                <a th:unless="${param.filter}" th:href="@{/foodCart(sortBy=${'typeAsc'})}"><i class="bi bi-arrow-up"></i></a>
-                            </th>
-                            <th scope="col">Price
-                                <a th:if="${param.filter}" th:href="@{/foodCart(filter=${param.filter},sortBy=${'priceDesc'})}"><i class="bi bi-arrow-down"></i></a>
-                                <a th:unless="${param.filter}" th:href="@{/foodCart(sortBy=${'priceDesc'})}"><i class="bi bi-arrow-down"></i></a>
-                                <a th:if="${param.filter}" th:href="@{/foodCart(filter=${param.filter},sortBy=${'priceAsc'})}"><i class="bi bi-arrow-up"></i></a>
-                                <a th:unless="${param.filter}" th:href="@{/foodCart(sortBy=${'priceAsc'})}"><i class="bi bi-arrow-up"></i></a>
-                            </th>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Price</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
