@@ -64,7 +64,12 @@
                             Sort by
                             <select class="form-control" id="sortBy" name="sortBy">
                                 <option th:each="sortBy: ${T(hu.acsaif.foodcart.entity.FoodSort).values()}"
-                                        th:value="${sortBy}" th:text="${sortBy.getDisplayValue()}"></option>
+                                        th:value="${sortBy}" th:text="${sortBy.getDisplayValue()}"
+                                        th:selected="${#lists.contains(param.sortBy,sortBy.name())}"
+                                        th:unless="${#lists.isEmpty(param.sortBy)}">
+                                </option><option th:each="sortBy: ${T(hu.acsaif.foodcart.entity.FoodSort).values()}"
+                                        th:value="${sortBy}" th:text="${sortBy.getDisplayValue()}"
+                                        th:if="${#lists.isEmpty(param.sortBy)}"></option>
                             </select>
                         </div>
                         <div class="col-1">
