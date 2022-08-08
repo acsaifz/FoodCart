@@ -46,7 +46,12 @@
                         <div class="col-2">
                             <select multiple class="form-control" id="typeFilter" name="typeFilter">
                                 <option th:each="foodType: ${T(hu.acsaif.foodcart.entity.FoodType).values()}"
-                                        th:value="${foodType}" th:text="${foodType.getDisplayValue()}"></option>
+                                        th:value="${foodType}" th:text="${foodType.getDisplayValue()}"
+                                        th:selected="${#lists.contains(param.typeFilter,foodType.name())}"
+                                        th:unless="${#lists.isEmpty(param.typeFilter)}"></option>
+                                <option th:each="foodType: ${T(hu.acsaif.foodcart.entity.FoodType).values()}"
+                                        th:value="${foodType}" th:text="${foodType.getDisplayValue()}"
+                                        th:if="${#lists.isEmpty(param.typeFilter)}"></option>
                             </select>
                         </div>
                         <div class="col-2">

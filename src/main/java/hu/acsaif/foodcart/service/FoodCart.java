@@ -90,7 +90,7 @@ public class FoodCart {
             foods = foods.stream().filter(food -> food.getFoodName().toLowerCase().contains(nameFilter.toLowerCase())).toList();
         }
 
-        if (typeFilters.size() > 0){
+        if (!typeFilters.isEmpty()){
             foods = foods.stream().filter(food -> {
                 for (FoodType foodType: typeFilters){
                     if (foodType == food.getFoodType()){
